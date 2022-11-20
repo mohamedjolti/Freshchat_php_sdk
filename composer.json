@@ -1,0 +1,22 @@
+{
+    "name": "jolti/freshchat_sdk",
+    "description": "A simple php SDK to use Freschat API",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Freshchat\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mohamed jolti",
+            "email": "mohamedelkholti062@gmail.com"
+        }
+    ],
+    "require": {
+        "psr/container": "^2.0",
+        "vlucas/phpdotenv": "^5.5",
+        "symfony/http-foundation": "^6.0"
+    }
+}
