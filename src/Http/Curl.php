@@ -16,7 +16,7 @@ class Curl
      * @param  mixed $headers
      * @return void
      */
-    public function post($url, \stdClass $body, array $headers, bool $isJson)
+    public function post($url, \stdClass $body, array $headers, bool $isJson = false)
     {
         $request = $this->createRequest($url, $headers);
 

@@ -46,7 +46,7 @@ class Message
     /**
      * setActorType
      *
-     * @param  mixed $actorType
+     * @param  string $actorType
      * @return void
      */
     public function setActorType(string $actorType)
