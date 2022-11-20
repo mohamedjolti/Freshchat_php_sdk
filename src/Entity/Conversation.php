@@ -21,18 +21,19 @@ class Conversation
         /**
          * @var string
          */
-        $CREATE_CONVERSATION = FreshchatApiEndpoint::getConversationCreation();
-        $headers = FreshchatApiEndpoint::createHeader();
+        $CREATE_CONVERSATION = FreshchatApi::getConversationCreation();
+        $headers = FreshchatApi::createHeader();
 
         return $this->curl->post($CREATE_CONVERSATION,new \stdClass, $headers);
     }
 
     public function sendMessage(Message $message)
     {
-        $MESSAGE_ENDPOINT = FreshchatApiEndpoint::getConversationSendMessage($this->id);
+        $MESSAGE_ENDPOINT = FreshchatApi::getConversationSendMessage($this->id);
         $messageObject = $message->createMessageObject();
-        return $this->curl->post($MESSAGE_ENDPOINT, $messageObject, FreshchatApiEndpoint::createHeader(), true);
+        return $this->curl->post($MESSAGE_ENDPOINT, $messageObject, FreshchatApi::createHeader(), true);
     }
+
 
 	/**
 	 * @return string

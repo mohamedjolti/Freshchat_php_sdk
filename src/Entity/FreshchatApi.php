@@ -3,15 +3,18 @@
 namespace Freshchat\Entity;
 
 /**
- * FreshchatApiEndpoint a class to return diffrent Freschat API endpoints
+ * FreshchatApi a class to return diffrent Freschat API endpoints
  */
-class FreshchatApiEndpoint
+class FreshchatApi
 {
 
     public const API_URL      =  "https://api.freshchat.com/v2";
     public const CONVERSATION =  "conversations";
     public const MESSAGES     =  "messages";
     public const AGENTS       =  "agents";
+    public const AGENT_ACTOR  =  "agent";
+
+    public const USER_ACTOR   =   "user";
 
     /**
      * getConversationCreation
@@ -20,7 +23,7 @@ class FreshchatApiEndpoint
      */
     public static function getConversationCreation()
     {
-        return FreshchatApiEndpoint::API_URL . "/" . FreshchatApiEndpoint::CONVERSATION;
+        return FreshchatApi::API_URL . "/" . FreshchatApi::CONVERSATION;
     }
 
     /**
@@ -31,7 +34,7 @@ class FreshchatApiEndpoint
      */
     public static function getConversationRetreive(string $conversation_id)
     {
-        return FreshchatApiEndpoint::API_URL . "/" . FreshchatApiEndpoint::CONVERSATION . "/" . $conversation_id;
+        return FreshchatApi::API_URL . "/" . FreshchatApi::CONVERSATION . "/" . $conversation_id;
     }
 
     /**
@@ -42,7 +45,7 @@ class FreshchatApiEndpoint
      */
     public static function getConversationSendMessage(string $conversation_id)
     {
-        return FreshchatApiEndpoint::API_URL . "/" . FreshchatApiEndpoint::CONVERSATION . "/" . $conversation_id . "/" . FreshchatApiEndpoint::MESSAGES;
+        return FreshchatApi::API_URL . "/" . FreshchatApi::CONVERSATION . "/" . $conversation_id . "/" . FreshchatApi::MESSAGES;
     }
 
     public static function createHeader()
