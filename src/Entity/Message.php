@@ -1,6 +1,8 @@
 <?php
 namespace Freshchat\Entity;
 
+use Freshchat\Entity\Types\MessageType;
+
 class Message
 {
 	private string $actorType = "agent";
@@ -10,6 +12,10 @@ class Message
 
 	private string $conversationId;
 	private string $userId;
+
+
+	private array $messageParts = [];
+
 	public function __construct()
 	{
 
@@ -26,6 +32,7 @@ class Message
 		$messageObject->actor_type = $this->actorType;
 		$messageObject->actor_id = $this->actorId;
 		$messageObject->message_type = $this->messageType;
+		$messageObject->message_parts = $this->messageParts;
 
 		return $messageObject;
 	}
@@ -134,22 +141,53 @@ class Message
 	 */
 	public function isUserMessage(): bool
 	{
-        return $this->getActorType() === FreshchatApi::USER_ACTOR;
+		return $this->getActorType() === FreshchatApi::USER_ACTOR;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getUserId(): string {
+	public function getUserId(): string
+	{
 		return $this->userId;
 	}
-	
+
 	/**
 	 * @param string $userId 
 	 * @return self
 	 */
-	public function setUserId(string $userId): self {
+	public function setUserId(string $userId): self
+	{
 		$this->userId = $userId;
 		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getMessageParts(): array
+	{
+		return $this->messageParts;
+	}
+
+	/**
+	 * @param array $messageParts 
+	 * @return self
+	 */
+	public function setMessageParts(array $messageParts): self
+	{
+		$this->messageParts = $messageParts;
+		return $this;
+	}
+
+	/**
+	 * the message_parts array can contain mutiple parts of diffrent types
+	 * 
+	 *  @param MessageType $type
+	 */
+	public function addMessagePart($type)
+	{
+		$messageTypeToStdClass = $type->buildMessageContent();
+		array_push($this->messageParts, $messageTypeToStdClass);
 	}
 }

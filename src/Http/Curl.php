@@ -14,7 +14,7 @@ class Curl
      * @param  mixed $url
      * @param  \StdClass $body
      * @param  mixed $headers
-     * @return void
+     * @return string
      */
     public function post($url, \stdClass $body, array $headers, bool $isJson = false)
     {
@@ -26,11 +26,8 @@ class Curl
             curl_setopt($request, CURLOPT_POSTFIELDS, http_build_query($body));
         }
 
-        try {
-            return $this->executeRequest($request);
-        } catch (Exception $e) {
-            throw ($e->getMessage());
-        }
+        return $this->executeRequest($request);
+
     }
 
     /**

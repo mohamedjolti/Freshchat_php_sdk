@@ -3,10 +3,14 @@ namespace Freshchat\Controller;
 
 use Freshchat\Entity\Conversation;
 use Freshchat\Entity\Factory\MessageResponseFactory;
-use Freshchat\Entity\Types\ImageMessageType;
-use Freshchat\Entity\Types\TextMessageType;
+use Freshchat\Entity\Message;
+use Freshchat\Entity\Types\ImageType;
+use Freshchat\Entity\Types\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * An example of a controller to handle Freschat notification
+ */
 class WebhookController
 {
     /**
@@ -22,21 +26,22 @@ class WebhookController
             $conversation = new Conversation();
             $conversation->setId($messageResponse->getConversationId());
         
-            $textMessage = new TextMessageType();
-            $textMessage->setActorId($defaultActorId);
+            $message = new Message();
+            $message->setActorId($defaultActorId);
             $simpleTextMessage = "thank you for your message '".$messageResponse->getResource() ."'";
-            $textMessage->setResource($simpleTextMessage);
-
-            $conversation->sendMessage($textMessage);
-
-            $imageMessage = new ImageMessageType();
-            $imageMessage->setActorId($defaultActorId);
             $url =  "https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/1200px-2022_FIFA_World_Cup.svg.png";
-            $imageMessage->setResource($url);
 
-            $conversation->sendMessage($imageMessage);
-        
-        
+            $textType = new TextType();
+            $textType->setResource($simpleTextMessage);
+
+            $imageType = new ImageType();
+            $imageType->setResource($url);
+
+            $message->addMessagePart($textType);
+            $message->addMessagePart($imageType);
+
+            
+            $conversation->sendMessage($message);
         }
     }
 }
