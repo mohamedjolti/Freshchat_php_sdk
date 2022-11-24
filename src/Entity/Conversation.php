@@ -30,7 +30,11 @@ class Conversation
     public function sendMessage(Message $message)
     {
         $MESSAGE_ENDPOINT = FreshchatApi::getConversationSendMessage($this->id);
+        /**
+         * @var \stdClass
+         */
         $messageObject = $message->createMessageObject();
+        
         return $this->curl->post($MESSAGE_ENDPOINT, $messageObject, FreshchatApi::createHeader(), true);
     }
 

@@ -187,7 +187,24 @@ class Message
 	 */
 	public function addMessagePart($type)
 	{
+		/**
+		 * @var \stdClass
+		 */
 		$messageTypeToStdClass = $type->buildMessageContent();
 		array_push($this->messageParts, $messageTypeToStdClass);
+	}
+
+	/**
+	 * @param array<MessageType> $messageParts
+	 * @return self
+	 */
+	public function addMultipleParts(array $messageParts):self
+	{
+		foreach($messageParts as $messagePart)
+		{
+			$this->addMessagePart($messagePart);
+		}
+		
+		return $this;
 	}
 }

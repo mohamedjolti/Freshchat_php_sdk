@@ -19,28 +19,30 @@ class WebhookController
     public function handleMessageNotification($request)
     {
         $messageResponseFactory = new MessageResponseFactory($request);
+        
+        /**
+         * message webhook sent by Freshchat server
+         * @var Message
+         */
         $messageResponse = $messageResponseFactory->getMessage();
+
         $defaultActorId = "7d995a36-5b2e-41b5-96f3-ba641d6abf64";
 
         if ($messageResponse->isUserMessage()) {
             $conversation = new Conversation();
             $conversation->setId($messageResponse->getConversationId());
-        
+
             $message = new Message();
             $message->setActorId($defaultActorId);
-            $simpleTextMessage = "thank you for your message '".$messageResponse->getResource() ."'";
-            $url =  "https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/1200px-2022_FIFA_World_Cup.svg.png";
-
-            $textType = new TextType();
-            $textType->setResource($simpleTextMessage);
+            $url = "https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/1200px-2022_FIFA_World_Cup.svg.png";
 
             $imageType = new ImageType();
             $imageType->setResource($url);
 
-            $message->addMessagePart($textType);
-            $message->addMessagePart($imageType);
+            $textType = new TextType();
+            $textType->setResource("Hi sir ,welcome to the World Cup");
 
-            
+            $message->addMultipleParts([$imageType , $textType]);
             $conversation->sendMessage($message);
         }
     }
