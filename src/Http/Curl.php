@@ -12,11 +12,11 @@ class Curl
      * post
      *
      * @param  mixed $url
-     * @param  \StdClass $body
+     * @param  \StdClass|null $body
      * @param  mixed $headers
      * @return string
      */
-    public function post($url, \stdClass $body, array $headers, bool $isJson = false)
+    public function post($url, \stdClass | null $body, array $headers, bool $isJson = false)
     {
         $request = $this->createRequest($url, $headers);
 
@@ -28,6 +28,16 @@ class Curl
 
         return $this->executeRequest($request);
 
+    }
+
+    /**
+     * @param string $url
+     * @param array  $headers
+     */
+    public function get(string $url ,array $headers)
+    {
+        $request = $this->createRequest($url, $headers);
+        return $this->executeRequest($request);
     }
 
     /**
@@ -58,8 +68,6 @@ class Curl
 
         curl_close($request);
 
-        $statusCode = $info['http_code'] === 0 ? 500 : $info['http_code'];
-
-        return $statusCode;
+        return $body;
     }
 }

@@ -1,7 +1,9 @@
 <?php
 namespace Freshchat\Controller;
 
+use Freshchat\Entity\Agent;
 use Freshchat\Entity\Conversation;
+use Freshchat\Entity\Factory\AgentFactory;
 use Freshchat\Entity\Factory\MessageResponseFactory;
 use Freshchat\Entity\Message;
 use Freshchat\Entity\Types\ImageType;
@@ -18,15 +20,27 @@ class WebhookController
      */
     public function handleMessageNotification($request)
     {
+        // get list of agents 
+        $agents = new Agent();
+        $agentsFromApi = $agents->getAgents();
+
+        $agentFactory = new AgentFactory();
+
+        /**
+         * @var array<Agent>
+         */
+        $agents = $agentFactory->build($agentsFromApi);
+
+        // use the first agent id to be used to send messages
+        $defaultActorId = $agents[0]->getId();
+
+        // get message from request sent by freschat 
         $messageResponseFactory = new MessageResponseFactory($request);
-        
         /**
          * message webhook sent by Freshchat server
          * @var Message
          */
         $messageResponse = $messageResponseFactory->getMessage();
-
-        $defaultActorId = "7d995a36-5b2e-41b5-96f3-ba641d6abf64";
 
         if ($messageResponse->isUserMessage()) {
             $conversation = new Conversation();
@@ -42,7 +56,7 @@ class WebhookController
             $textType = new TextType();
             $textType->setResource("Hi sir ,welcome to the World Cup");
 
-            $message->addMultipleParts([$imageType , $textType]);
+            $message->addMultipleParts([$imageType, $textType]);
             $conversation->sendMessage($message);
         }
     }

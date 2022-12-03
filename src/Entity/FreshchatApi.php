@@ -23,7 +23,7 @@ class FreshchatApi
      */
     public static function getConversationCreation()
     {
-        return FreshchatApi::API_URL . "/" . FreshchatApi::CONVERSATION;
+        return self::API_URL . "/" . self::CONVERSATION;
     }
 
     /**
@@ -34,7 +34,7 @@ class FreshchatApi
      */
     public static function getConversationRetreive(string $conversation_id)
     {
-        return FreshchatApi::API_URL . "/" . FreshchatApi::CONVERSATION . "/" . $conversation_id;
+        return self::API_URL . "/" . self::CONVERSATION . "/" . $conversation_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class FreshchatApi
      */
     public static function getConversationSendMessage(string $conversation_id)
     {
-        return FreshchatApi::API_URL . "/" . FreshchatApi::CONVERSATION . "/" . $conversation_id . "/" . FreshchatApi::MESSAGES;
+        return self::API_URL . "/" . self::CONVERSATION . "/" . $conversation_id . "/" . self::MESSAGES;
     }
 
     public static function createHeader()
@@ -55,5 +55,10 @@ class FreshchatApi
             "Authorization:Bearer ".$_ENV["API_TOKEN"]
          ];
          return $headers;
+    }
+
+    public static function getAgents()
+    {
+        return self::API_URL. "/" .self::AGENTS;
     }
 }
