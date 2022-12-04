@@ -35,7 +35,7 @@ class WebhookController
         $defaultActorId = $agents[0]->getId();
 
         // get message from request sent by freschat 
-        $messageResponseFactory = new MessageResponseFactory($request);
+        $messageResponseFactory = new MessageResponseFactory($request->getContent());
         /**
          * message webhook sent by Freshchat server
          * @var Message

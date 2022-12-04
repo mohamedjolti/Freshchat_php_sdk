@@ -18,9 +18,9 @@ class MessageResponseFactory
     /**
      *  @return void
      */
-    public function build($request)
+    public function build($content)
     {
-        $requestArray = (object) json_decode($request->getContent());
+        $requestArray = (object) json_decode($content);
         $requestMessage = $requestArray->data->message;
 
         $messageObject = new Message();

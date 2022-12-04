@@ -5,7 +5,7 @@ namespace Freshchat\Entity\Types;
 abstract class MessageType
 {
 
-    private string $resource;
+    private string $resource = "";
 
 
     abstract function buildMessageContent();
