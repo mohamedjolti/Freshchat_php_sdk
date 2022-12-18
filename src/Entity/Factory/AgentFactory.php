@@ -15,7 +15,7 @@ class AgentFactory
         $agents = [];
 
         /**
-         * @var \stdClass
+         * @var Array<\stdClass>
          */
         $agentsResponse = (object) $responseStd->agents;
         foreach ($agentsResponse as $agentResponse) {

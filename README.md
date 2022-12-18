@@ -21,8 +21,8 @@ with you Freshchat api token
 
 ## Example usage
 let assume you want to send a message  when a user send a message
-to your Bot, the WebhookController is an example of a handle to handle 
-freshchat message notification  
+to your Bot, the WebhookController is an example of a controller to handle 
+freshchat message notification (webhooks)
 1.First we have to get the message from the incoming request sent by freshchat server
 ```
 $messageResponseFactory = new MessageResponseFactory($request->getContent());
@@ -66,7 +66,7 @@ $message = new Message();
 $message->setActorId($defaultActorId);
 ```
 4. Adding Message parts ,message parts has diffrent type text, images ,buttons.in
-this specifc example we will add to parts a text and a image 
+this specifc example we will add two parts a text and a image 
 
 ```
 $imageType = new ImageType();
