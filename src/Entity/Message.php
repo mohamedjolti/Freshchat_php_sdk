@@ -32,7 +32,18 @@ class Message
 		$messageObject->actor_type = $this->actorType;
 		$messageObject->actor_id = $this->actorId;
 		$messageObject->message_type = $this->messageType;
-		$messageObject->message_parts = $this->messageParts;
+
+		// Convert each MessageType to StdClass to Match Payload Format
+		$messagePartsPayloads = [];
+		foreach ($this->messageParts as /** @var MessageType */$part) {
+			/**
+			 * @var \stdClass
+			 */
+			$messageTypeToStdClass = $part->buildMessageContent();
+			array_push($messagePartsPayloads, $messageTypeToStdClass);
+		}
+
+		$messageObject->message_parts = $messagePartsPayloads;
 
 		return $messageObject;
 	}
@@ -163,7 +174,7 @@ class Message
 	}
 
 	/**
-	 * @return array
+	 * @return array<MessageType>
 	 */
 	public function getMessageParts(): array
 	{
@@ -187,24 +198,20 @@ class Message
 	 */
 	public function addMessagePart($type)
 	{
-		/**
-		 * @var \stdClass
-		 */
-		$messageTypeToStdClass = $type->buildMessageContent();
-		array_push($this->messageParts, $messageTypeToStdClass);
+
+		array_push($this->messageParts, $type);
 	}
 
 	/**
 	 * @param array<MessageType> $messageParts
 	 * @return self
 	 */
-	public function addMultipleParts(array $messageParts):self
+	public function addMultipleParts($messageParts): self
 	{
-		foreach($messageParts as $messagePart)
-		{
+		foreach ($messageParts as $messagePart) {
 			$this->addMessagePart($messagePart);
 		}
-		
+
 		return $this;
 	}
 }

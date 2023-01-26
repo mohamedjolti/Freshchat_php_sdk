@@ -31,7 +31,7 @@ class WebhookController
          */
         $agents = $agentFactory->build($agentsFromApi);
 
-        // use the first agent id to be used to send messages
+        // use the first agent id  to send messages
         $defaultActorId = $agents[0]->getId();
 
         // get message from request sent by freschat 
@@ -54,9 +54,9 @@ class WebhookController
             $imageType->setResource($url);
 
             $textType = new TextType();
-            $textType->setResource("Hi sir ,welcome to the World Cup");
+            $textType->setResource("Hi sir ,thanks for you message : ");
 
-            $message->addMultipleParts([$imageType, $textType]);
+            $message->addMessagePart($messageResponse->getMessageParts()[0]);
             $conversation->sendMessage($message);
         }
     }

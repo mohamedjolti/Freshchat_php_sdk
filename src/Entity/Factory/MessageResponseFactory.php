@@ -61,6 +61,7 @@ class MessageResponseFactory
 
     public function buildMessagePart(\stdClass $part)
     {
+        $messagePart = null;
         // handle diffrent message part types 
         if (property_exists($part, "text")) {
             $messagePart = new TextType();
